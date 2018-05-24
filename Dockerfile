@@ -6,6 +6,9 @@ RUN pip install --upgrade pip
 RUN pip install --upgrade PyOpenSSL cryptography ansible
 RUN curl -fsSL https://goss.rocks/install | sh
 
+ADD dbus.service /etc/systemd/system/dbus.service
+RUN systemctl enable dbus.service
+
 # fix "mesg: ttyname failed: Inappropriate ioctl for device" warning
 RUN cp /etc/profile /root/.profile
 
