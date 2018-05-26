@@ -1,16 +1,21 @@
 FROM debian:9
 
-RUN apt-get update
-RUN apt-get -y install sudo systemd python-pip python-dev curl && apt-get clean
-RUN pip install --upgrade pip
-RUN pip install --upgrade PyOpenSSL cryptography ansible
-RUN curl -fsSL https://goss.rocks/install | sh
+RUN apt-get update && apt-get -y install \
+    sudo                                 \
+    systemd                              \
+    python-pip                           \
+    python-dev                           \
+    curl                                 \
+    && apt-get clean
 
 ADD dbus.service /etc/systemd/system/dbus.service
 RUN systemctl enable dbus.service
 
 # fix "mesg: ttyname failed: Inappropriate ioctl for device" warning
 RUN cp /etc/profile /root/.profile
+
+RUN pip install --upgrade ansible
+RUN curl -fsSL https://goss.rocks/install | sh
 
 WORKDIR /ansible
 
