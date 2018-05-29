@@ -14,7 +14,7 @@ RUN systemctl enable dbus.service
 # fix "mesg: ttyname failed: Inappropriate ioctl for device" warning
 RUN cp /etc/profile /root/.profile
 
-RUN pip install --upgrade ansible
+RUN pip install ansible ansible-lint
 RUN curl -fsSL https://goss.rocks/install | sh
 
 WORKDIR /ansible
